@@ -1,11 +1,10 @@
-/* Reset básico */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Variáveis de cor - Light Theme (Lilás) */
+/* Light Theme (Lilás) */
 :root {
     --primary-color: #D4A5A5; /* Lilás */
     --secondary-color: #FFF8E1; /* Creme */
@@ -28,7 +27,6 @@
     --shadow: rgba(0, 0, 0, 0.3);
 }
 
-/* Corpo da página */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: linear-gradient(135deg, var(--bg-color), rgba(212, 165, 165, 0.3));
@@ -44,7 +42,6 @@ body {
     transition: background 0.3s ease, color 0.3s ease;
 }
 
-/* Elementos decorativos */
 body::before {
     content: '';
     position: absolute;
@@ -59,7 +56,6 @@ body::before {
     z-index: -1;
 }
 
-/* Container principal */
 .container {
     background-color: rgba(255, 248, 225, 0.95);
     backdrop-filter: blur(15px);
@@ -85,7 +81,6 @@ body::before {
     background-color: rgba(44, 44, 44, 0.95);
 }
 
-/* Header */
 .header {
     display: flex;
     justify-content: space-between;
@@ -93,12 +88,10 @@ body::before {
     margin-bottom: 40px;
 }
 
-/* Title Section */
 .title-section {
     text-align: left;
 }
 
-/* Título */
 h1 {
     font-size: 3rem;
     margin: 0 0 8px 0;
@@ -107,7 +100,6 @@ h1 {
     animation: fadeInUp 0.6s ease 0.2s both;
 }
 
-/* Slogan */
 .slogan {
     font-size: 0.9rem;
     margin: 0;
@@ -117,7 +109,6 @@ h1 {
     animation: fadeInUp 0.6s ease 0.4s both;
 }
 
-/* Theme Toggle */
 .theme-toggle {
     background: none;
     border: 2px solid var(--primary-color);
@@ -140,7 +131,6 @@ h1 {
     transform: scale(0.95);
 }
 
-/* Seção de input */
 .input-section {
     position: relative;
     margin-bottom: 40px;
@@ -297,7 +287,6 @@ h1 {
     animation: shake 0.5s ease;
 }
 
-/* Loading */
 .weather-display.loading {
     position: relative;
 }
@@ -316,7 +305,6 @@ h1 {
     animation: spin 1s linear infinite;
 }
 
-/* Animações */
 @keyframes fadeInBody {
     from { opacity: 0; }
     to { opacity: 1; }

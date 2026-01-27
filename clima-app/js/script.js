@@ -1,21 +1,16 @@
-// script.js - Lógica do aplicativo de clima com autocomplete e theme switch
 
-// Elementos do DOM
 const cityInput = document.getElementById('city-input');
 const searchBtn = document.getElementById('search-btn');
 const weatherDisplay = document.getElementById('weather-display');
 const suggestionsList = document.getElementById('suggestions');
 const themeToggle = document.getElementById('theme-toggle');
 
-// Variável para debounce
 let debounceTimer;
 
-// Carregar tema salvo
 const savedTheme = localStorage.getItem('theme') || 'light';
 document.body.classList.toggle('dark-theme', savedTheme === 'dark');
 themeToggle.textContent = savedTheme === 'dark' ? '🌙' : '🌞';
 
-// Event listener para o botão de busca
 searchBtn.addEventListener('click', () => {
     const city = cityInput.value.trim();
     if (city) {
@@ -26,7 +21,6 @@ searchBtn.addEventListener('click', () => {
     }
 });
 
-// Event listener para input (autocomplete)
 cityInput.addEventListener('input', (e) => {
     const query = e.target.value.trim();
     clearTimeout(debounceTimer);
@@ -39,14 +33,12 @@ cityInput.addEventListener('input', (e) => {
     }
 });
 
-// Event listener para clicar fora e fechar sugestões
 document.addEventListener('click', (e) => {
     if (!cityInput.contains(e.target) && !suggestionsList.contains(e.target)) {
         clearSuggestions();
     }
 });
 
-// Event listener para toggle de tema
 themeToggle.addEventListener('click', () => {
     const isDark = document.body.classList.toggle('dark-theme');
     const theme = isDark ? 'dark' : 'light';
@@ -54,7 +46,6 @@ themeToggle.addEventListener('click', () => {
     themeToggle.textContent = isDark ? '🌙' : '🌞';
 });
 
-// Função para obter sugestões de cidades
 async function getSuggestions(query) {
     try {
         const url = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(query)}&count=5&language=pt&format=json`;
@@ -68,7 +59,6 @@ async function getSuggestions(query) {
     }
 }
 
-// Função para exibir sugestões
 function displaySuggestions(cities) {
     suggestionsList.innerHTML = '';
     if (cities.length === 0) {
@@ -88,17 +78,14 @@ function displaySuggestions(cities) {
     suggestionsList.style.display = 'block';
 }
 
-// Função para limpar sugestões
 function clearSuggestions() {
     suggestionsList.innerHTML = '';
     suggestionsList.style.display = 'none';
 }
 
-// Função principal para obter o clima
 async function getWeather(city) {
     weatherDisplay.classList.add('loading');
     try {
-        // Primeiro, geocodificar a cidade para obter latitude e longitude
         const geoData = await geocodeCity(city);
         if (!geoData) {
             displayError('Cidade não encontrada. Verifique o nome e tente novamente.');
@@ -107,10 +94,8 @@ async function getWeather(city) {
 
         const { latitude, longitude, country } = geoData;
 
-        // Agora, obter os dados climáticos
         const weatherData = await fetchWeather(latitude, longitude);
 
-        // Exibir os dados
         displayWeather(weatherData, city, country);
     } catch (error) {
         console.error('Erro ao buscar dados:', error);
@@ -120,7 +105,6 @@ async function getWeather(city) {
     }
 }
 
-// Função para geocodificar a cidade usando Open-Meteo
 async function geocodeCity(city) {
     const url = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1&language=pt&format=json`;
     const response = await fetch(url);
@@ -138,7 +122,6 @@ async function geocodeCity(city) {
     return null;
 }
 
-// Função para buscar dados climáticos
 async function fetchWeather(lat, lon) {
     const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&hourly=temperature_2m,apparent_temperature&timezone=auto`;
     const response = await fetch(url);
@@ -149,12 +132,10 @@ async function fetchWeather(lat, lon) {
     return data;
 }
 
-// Função para exibir os dados do clima
 function displayWeather(data, city, country) {
     const current = data.current_weather;
     const hourly = data.hourly;
 
-    // Mapeamento de códigos de clima para descrições (simplificado)
     const weatherDescriptions = {
         0: 'Céu limpo',
         1: 'Principalmente limpo',
@@ -202,7 +183,6 @@ function displayWeather(data, city, country) {
     weatherDisplay.innerHTML = html;
 }
 
-// Função para exibir erros
 function displayError(message) {
     weatherDisplay.innerHTML = `<p class="error">${message}</p>`;
 }
